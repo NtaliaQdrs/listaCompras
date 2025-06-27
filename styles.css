@@ -1,9 +1,9 @@
 body {
   font-family: 'Indie Flower', cursive;
   background-color: #f0e0cf;
-  background-image: url("https://media.istockphoto.com/id/515964584/pt/vetorial/sem-costura-padr%C3%A3o-de-fundo-colorfull-carrinho-de-compras.jpg?s=612x612&w=0&k=20&c=tddIs4M7g0FlLJrtgVS1tZOiNmQJERmUjfCZqoT9JOw="); /* ou ./img/papel-textura.jpg */
-  background-size: cover;    
-  background-position: center; 
+  background-image: url("https://media.istockphoto.com/id/515964584/pt/vetorial/sem-costura-padr%C3%A3o-de-fundo-colorfull-carrinho-de-compras.jpg?s=612x612&w=0&k=20&c=tddIs4M7g0FlLJrtgVS1tZOiNmQJERmUjfCZqoT9JOw=");
+  background-size: cover;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   margin: 0;
   padding: 30px;
@@ -12,11 +12,11 @@ body {
 .container {
   max-width: 700px;
   margin: auto;
-  background: #fff9f3;
+  background: rgba(255, 255, 255, 0.95);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
   border: 2px solid #d3bda1;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
 h1 {
@@ -69,7 +69,6 @@ li {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 li.comprado {
@@ -92,11 +91,25 @@ li.comprado {
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
 .remove-btn:hover {
   background-color: #ff8888;
+}
+
+.comprar-btn {
+  background-color: #b2f0b2;
+  color: #225522;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.comprar-btn:hover {
+  background-color: #9ce89c;
 }
 
 .total {
@@ -105,4 +118,3 @@ li.comprado {
   margin-top: 20px;
   font-weight: bold;
 }
-
