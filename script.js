@@ -9,7 +9,12 @@ const totalDiv = document.getElementById("total");
 
 //local storage
 //carrega os itens salvos no local storage (se houver), ou começa vazio
-let itens = JSON.parse(localStorage.getItem("itens")) || [];
+let itens =              // crio a variável "itens"
+  JSON.parse(            // transformo o texto salvo em um array de objetos
+    localStorage.getItem("itens") // pego do navegador o que foi salvo com o nome "itens"
+  ) 
+  || [];                 // se não achar nada, uso um array vazio
+
 
 //função que salva os dados no local storage
 function salvarLocalStorage() {
@@ -109,5 +114,33 @@ botaoAdicionar.addEventListener("click", () => {
   inputPreco.value = "";
   inputQtd.value = "";
 });
+
+
+//botao de clicks e reset
+const botao = document.getElementById("botaoDeClicks");
+const contadorElemento = document.getElementById("contador");
+const botaoZerar = document.getElementById("botaoReset");
+
+// 2. Carrega o valor salvo ou começa do zero
+let contador = parseInt(localStorage.getItem("cliques")) || 0;
+
+// 3. Atualiza o texto na tela logo no começo
+contadorElemento.textContent = "Cliques: " + contador;
+
+// 4. Incrementa contador e salva ao clicar no botão
+botao.addEventListener("click", function() {
+  contador++;
+  contadorElemento.textContent = "Cliques: " + contador;
+  localStorage.setItem("cliques", contador);
+});
+
+// 5. Zera contador e salva ao clicar no botão reset
+botaoZerar.addEventListener("click", () => {
+  contador = 0;
+  contadorElemento.textContent = "Cliques: " + contador;
+  localStorage.setItem("cliques", contador);
+});
+
+
 
 renderizarLista();
