@@ -1,3 +1,4 @@
+// Captura dos elementos do DOM
 const inputNome = document.getElementById("itemInput");
 const inputPreco = document.getElementById("precoInput");
 const inputQtd = document.getElementById("quantidadeInput");
@@ -6,141 +7,140 @@ const botaoAdicionar = document.getElementById("btnAdicionar");
 const listaUl = document.getElementById("lista");
 const totalDiv = document.getElementById("total");
 
+// Recupera os itens do localStorage ou cria um array vazio
+let itens = JSON.parse(localStorage.getItem("itens")) || [];
 
-//local storage
-//carrega os itens salvos no local storage (se houver), ou começa vazio
-let itens =              // crio a variável "itens"
-  JSON.parse(            // transformo o texto salvo em um array de objetos
-    localStorage.getItem("itens") // pego do navegador o que foi salvo com o nome "itens"
-  ) 
-  || [];                 // se não achar nada, uso um array vazio
-
-
-//função que salva os dados no local storage
-function salvarLocalStorage() {
+// Função para salvar itens no localStorage
+const salvarLocalStorage = () =>
   localStorage.setItem("itens", JSON.stringify(itens));
-}
 
-//função que calcula o total do valor da lista
-function calcularTotal() {
-  const total = itens.reduce((soma, item) => soma + (item.preco * item.qtd), 0);
+// Calcula o total dos itens na lista e exibe na tela
+const calcularTotal = () => {
+  const total = itens.reduce((soma, { preco, qtd }) => soma + preco * qtd, 0);
   totalDiv.textContent = `💰 Total: R$ ${total.toFixed(2)}`;
-}
+};
 
-//função que exibe os itens na tela
-function renderizarLista() {
+// Exibe os itens na tela, com botões para marcar como comprado e remover
+const renderizarLista = () => {
   listaUl.innerHTML = "";
 
-  itens.forEach((item, index) => {
+  itens.forEach(({ nome, preco, qtd, unidade, comprado }, i) => {
     const li = document.createElement("li");
 
-    //se o item ja foi comprado, aplica a classe de estilização (riscado)
-    if (item.comprado) li.classList.add("comprado");
+    // Se o item foi comprado, adiciona a classe que estiliza como riscado
+    if (comprado) li.classList.add("comprado");
 
-    const subtotal = item.preco * item.qtd;
-    const quantidadeFormatada = `${item.qtd} ${item.unidade}`;
+    const subtotal = preco * qtd;
+    const quantidadeFormatada = `${qtd} ${unidade}`;
 
+    // Container para o conteúdo do item
     const divItem = document.createElement("div");
     divItem.className = "item-conteudo";
 
-
+    // Cria o texto do item com nome, preço, quantidade e subtotal
     const texto = document.createElement("div");
     texto.innerHTML = `
-      <strong>${item.nome}</strong><br>
-      Preço: R$ ${item.preco.toFixed(2)}<br>
+      <strong>${nome}</strong><br>
+      Preço: R$ ${preco.toFixed(2)}<br>
       Quantidade: ${quantidadeFormatada}<br>
       Subtotal: R$ ${subtotal.toFixed(2)}
     `;
 
-    //botão de 'marcar como comprado'
+    // Botão para marcar/desmarcar como comprado
     const btnMarcar = document.createElement("button");
-    btnMarcar.textContent = item.comprado ? "❌ Desmarcar" : "✅ Marcar como comprado";
+    btnMarcar.textContent = comprado ? "❌ Desmarcar" : "✅ Marcar como comprado";
     btnMarcar.className = "comprar-btn";
-
-    //1° event listener no botao 'marcar como comprado'
-    //alterna o estado de 'comprado', salva no localStorage e re-renderiza a lista
-    btnMarcar.addEventListener("click", (e) => {
-      e.stopPropagation(); 
-      itens[index].comprado = !itens[index].comprado;
+    btnMarcar.addEventListener("click", e => {
+      e.stopPropagation(); // evita que o evento "suba" para outros elementos
+      itens[i].comprado = !itens[i].comprado;
       salvarLocalStorage();
       renderizarLista();
     });
 
-    //botao de remover o item
+    // Botão para remover o item da lista
     const btnRemover = document.createElement("button");
     btnRemover.textContent = "🗑️ Remover";
     btnRemover.className = "remove-btn";
-
-    //2° event listener no botao de remover
-    //remove o item da lista 
-    btnRemover.addEventListener("click", (e) => {
-      e.stopPropagation(); //evita bugs com outros eventos
-      itens.splice(index, 1);
+    btnRemover.addEventListener("click", e => {
+      e.stopPropagation();
+      itens.splice(i, 1);
       salvarLocalStorage();
       renderizarLista();
     });
 
-   
+    // Monta a estrutura do item na lista
     divItem.appendChild(texto);
-    li.appendChild(divItem);
-    li.appendChild(btnMarcar);
-    li.appendChild(btnRemover);
-
+    li.append(divItem, btnMarcar, btnRemover);
     listaUl.appendChild(li);
   });
 
-  calcularTotal();
-}
+  calcularTotal(); // Atualiza o total toda vez que renderiza a lista
+};
 
-
-//3° event listener no botao de 'adicionar'
-// detectar quando o usuário clica no botão de adicionar, e fazer: Validação; inserção no array; atualização do localStorage; re-renderização da lista
+// Evento para adicionar um novo item na lista ao clicar no botão
 botaoAdicionar.addEventListener("click", () => {
   const nome = inputNome.value.trim();
   const preco = parseFloat(inputPreco.value);
   const qtd = parseFloat(inputQtd.value);
   const unidade = inputUnidade.value;
 
-  if (nome === "" || isNaN(preco) || preco < 0 || isNaN(qtd) || qtd <= 0) {
+  // Validação básica dos dados de entrada
+  if (!nome || isNaN(preco) || preco < 0 || isNaN(qtd) || qtd <= 0) {
     alert("Preencha nome, preço e quantidade válidos.");
     return;
   }
 
+  // Adiciona o novo item no array e salva no localStorage
   itens.push({ nome, preco, qtd, unidade, comprado: false });
-  salvarLocalStorage(); //salva no local storage
+  salvarLocalStorage();
   renderizarLista();
 
+  // Limpa os campos do formulário após adicionar
   inputNome.value = "";
   inputPreco.value = "";
   inputQtd.value = "";
 });
 
+// Controle do contador de cliques
 
-//botao de clicks e reset
 const botao = document.getElementById("botaoDeClicks");
 const contadorElemento = document.getElementById("contador");
 const botaoZerar = document.getElementById("botaoReset");
 
-// 2. Carrega o valor salvo ou começa do zero
+// Recupera o valor salvo do contador ou inicia com zero
 let contador = parseInt(localStorage.getItem("cliques")) || 0;
-
-// 3. Atualiza o texto na tela logo no começo
 contadorElemento.textContent = "Cliques: " + contador;
 
-// 4. Incrementa contador e salva ao clicar no botão
-botao.addEventListener("click", function() {
+// Incrementa o contador e salva no localStorage
+botao.addEventListener("click", () => {
   contador++;
   contadorElemento.textContent = "Cliques: " + contador;
   localStorage.setItem("cliques", contador);
 });
 
-// 5. Zera contador e salva ao clicar no botão reset
+// Reseta o contador para zero e atualiza o localStorage
 botaoZerar.addEventListener("click", () => {
   contador = 0;
   contadorElemento.textContent = "Cliques: " + contador;
   localStorage.setItem("cliques", contador);
 });
 
+// Controle do modo escuro
 
+const botaoModoEscuro = document.getElementById("botaoModoEscuro");
 
+// Alterna o modo escuro e salva a preferência no localStorage
+botaoModoEscuro.addEventListener("click", () => {
+  const ativado = document.body.classList.toggle("modo-escuro");
+  botaoModoEscuro.textContent = ativado ? "Desativar modo escuro" : "Ativar modo escuro";
+  localStorage.setItem("modoEscuro", ativado);
+});
+
+// Aplica o modo escuro automaticamente se já estiver salvo como ativo
+if (localStorage.getItem("modoEscuro") === "true") {
+  document.body.classList.add("modo-escuro");
+  botaoModoEscuro.textContent = "Desativar modo escuro";
+}
+
+// Renderiza a lista inicialmente ao carregar a página
 renderizarLista();

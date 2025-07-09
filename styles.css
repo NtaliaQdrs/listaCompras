@@ -9,6 +9,46 @@ body {
   padding: 30px;
 }
 
+body.modo-escuro {
+  background-color: #121212 !important;  /* muda o fundo para escuro */
+  background-image: none !important;     /* remove a imagem de fundo */
+  color: #e0e0e0 !important;              /* muda a cor do texto */
+}
+
+body.modo-escuro .container {
+  background-color: #222 !important;
+  border-color: #444 !important;
+  color: #e0e0e0 !important;
+}
+
+body.modo-escuro input,
+body.modo-escuro select {
+  background-color: #333 !important;
+  border-color: #555 !important;
+  color: #eee !important;
+}
+
+body.modo-escuro button {
+  background-color: #444 !important;
+  border-color: #666 !important;
+  color: #eee !important;
+}
+
+body.modo-escuro button:hover {
+  background-color: #555 !important;
+}
+
+body.modo-escuro ul li {
+  background-color: #333 !important;
+  border-color: #555 !important;
+  color: #eee !important;
+}
+
+body.modo-escuro li.comprado {
+  background-color: #345634 !important;
+  color: #bbb !important;
+  text-decoration: line-through !important;
+}
 
 .container {
   max-width: 700px;
@@ -113,7 +153,7 @@ li.comprado {
   background-color: #9ce89c;
 }
 
-.total {
+#total {
   text-align: right;
   font-size: 20px;
   margin-top: 20px;
