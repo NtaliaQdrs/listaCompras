@@ -35,7 +35,7 @@ body.modo-escuro button {
 }
 
 body.modo-escuro button:hover {
-  background-color: #555 !important;
+  background-color: #080808 !important;
 }
 
 body.modo-escuro ul li {
