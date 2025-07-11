@@ -142,5 +142,21 @@ if (localStorage.getItem("modoEscuro") === "true") {
   botaoModoEscuro.textContent = "Desativar modo escuro";
 }
 
+// Controle do modo rosa
+
+const botaoModoRosa = document.getElementById("botaoModoRosa");
+
+// Alterna o modo rosa e salva a preferência no localStorage
+botaoModoRosa.addEventListener("click", () => {
+  const ativado = document.body.classList.toggle("modo-rosa");
+  botaoModoRosa.textContent = ativado ? "Desativar modo rosa" : "Ativar modo rosa";
+  localStorage.setItem("modoRosa", ativado);
+});
+
+// Aplica o modo rosa automaticamente se já estiver salvo como ativo
+if (localStorage.getItem("modoRosa") === "true") {
+  document.body.classList.add("modo-rosa");
+  botaoModoEscuro.textContent = "Desativar modo rosa";
+}
 // Renderiza a lista inicialmente ao carregar a página
 renderizarLista();
