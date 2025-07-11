@@ -156,7 +156,7 @@ botaoModoRosa.addEventListener("click", () => {
 // Aplica o modo rosa automaticamente se já estiver salvo como ativo
 if (localStorage.getItem("modoRosa") === "true") {
   document.body.classList.add("modo-rosa");
-  botaoModoEscuro.textContent = "Desativar modo rosa";
+  botaoModoRosa.textContent = "Desativar modo rosa";
 }
 // Renderiza a lista inicialmente ao carregar a página
 renderizarLista();

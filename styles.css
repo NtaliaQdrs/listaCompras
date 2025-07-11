@@ -46,9 +46,55 @@ body.modo-escuro ul li {
 
 body.modo-escuro li.comprado {
   background-color: #345634 !important;
-  color: #bbb !important;
+  color: #bbbbbb !important;
   text-decoration: line-through !important;
 }
+
+/*modo rosa*/
+
+body.modo-rosa {
+  background-color: #ffbcf6 !important;  /* muda o fundo para rosa*/
+  background-image: none !important;     /* remove a imagem de fundo */
+  color: #532650 !important;              /* muda a cor do texto */
+}
+
+body.modo-rosa .container {
+  background-color: #f0b5ee !important;
+  border-color: #812a76 !important;
+  color: #532650 !important; 
+}
+
+body.modo-rosa input,
+body.modo-rosa select {
+  background-color: #d894c1 !important;
+  border-color: #8d2c80 !important;
+  color: #532650 !important; 
+  
+}
+
+body.modo-rosa button {
+  background-color: #f3a2eb !important;
+  border-color: #943487 !important;
+  color: #532650 !important; 
+}
+
+body.modo-rosa button:hover {
+  background-color: #c784be !important;
+}
+
+body.modo-rosa ul li {
+  background-color: #d67eca !important;
+  border-color: #79003c !important;
+  color: #532650 !important; 
+}
+
+body.modo-rosa li.comprado {
+  background-color: #da4e78 !important;
+  color: #532650 !important; 
+  text-decoration: line-through !important;
+}
+
+
 
 .container {
   max-width: 700px;
