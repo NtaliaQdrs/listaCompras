@@ -79,7 +79,7 @@ body.modo-rosa button {
 }
 
 body.modo-rosa button:hover {
-  background-color: #c784be !important;
+  background-color: #db43c7 !important;
 }
 
 body.modo-rosa ul li {
@@ -89,7 +89,7 @@ body.modo-rosa ul li {
 }
 
 body.modo-rosa li.comprado {
-  background-color: #da4e78 !important;
+  background-color: #e24a78 !important;
   color: #532650 !important; 
   text-decoration: line-through !important;
 }
